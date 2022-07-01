@@ -8,7 +8,7 @@ MongoClient.connect(url, (err, db) =>{
     if(err) throw err;
 
     const dbo = db.db("sathya");
-    dbo.collection('userInformation').aggregate([     //userInformation is Table name
+    dbo.collection('userInformation').aggregate([     //userInformation is Tables name
         {  $lookup:
             {
                from: 'userAddress',                // userAddress is Another tables name
