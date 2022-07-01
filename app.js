@@ -1,26 +1,15 @@
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const app= express();
+var MongoClient = require('mongodb').MongoClient;
 
-const url = "mongodb://localhost:27017/";
+var url = "mongodb://localhost:27017/";
 
-MongoClient.connect(url, (err, db) =>{
-    if(err) throw err;
+MongoClient.connect(url, function(err,db){
+	if(err) throw err;
 
-    const dbo = db.db("sathya");
-    dbo.collection('userInformation').aggregate([     //userInformation is Tables name
-        {  $lookup:
-            {
-               from: 'userAddress',                // userAddress is Another tables name
-               localField: 'fullname',
-               foreignField: 'fullname',
-               as: 'address'
-            }
-        }
-    ]).toArray((err, res)=>{
-        if(err) throw err;
-        console.log(JSON.stringify(res));
-        db.close();
-    })
-
-})
+	var dbo = db.db("sathya");
+	var mysort = { name : 1};
+	dbo.collection("College").find().sort(mysort).toArray(function(err, result){
+		if (err) throw err;
+    console.log(result);
+    db.close();
+});
+});
